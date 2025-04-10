@@ -5,7 +5,7 @@ import Create from './Create';
 import Goals from './Goals';
 
 function App() {
-  // Fonction de validation des données
+  
   const validateGoals = (data) => {
     if (!Array.isArray(data)) return [];
     return data.filter(item => 
@@ -18,7 +18,7 @@ function App() {
     );
   };
 
-  // Initialisation de l'état avec validation
+  /
   const [goals, setGoals] = useState(() => {
     try {
       const saved = localStorage.getItem("goals");
@@ -29,7 +29,7 @@ function App() {
     }
   });
 
-  // Sauvegarde dans localStorage
+  
   useEffect(() => {
     try {
       localStorage.setItem("goals", JSON.stringify(goals));
@@ -38,7 +38,7 @@ function App() {
     }
   }, [goals]);
 
-  // Ajouter un nouvel objectif
+  /
   const addGoal = (newGoal) => {
     setGoals([...goals, {
       ...newGoal,
@@ -47,7 +47,7 @@ function App() {
     }]);
   };
 
-  // Mettre à jour la progression
+  
   const updateProgress = (id, amount) => {
     setGoals(goals.map(goal => {
       if (goal.id === id) {
@@ -60,7 +60,7 @@ function App() {
     }));
   };
 
-  // Supprimer un objectif
+
   const deleteGoal = (id) => {
     setGoals(goals.filter(goal => goal.id !== id));
   };
