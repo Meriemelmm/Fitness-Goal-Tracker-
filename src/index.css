@@ -1,3 +1,4 @@
+
 :root {
   --primary: #3B82F6;
   --secondary: #10B981;
@@ -46,10 +47,10 @@ header {
 
 .logo h1 {
   font-size: 20px;
-  color: var(--secondary);
+  color: var(--primary);
 }
 
-
+/* Main Content */
 main {
   padding: 30px 0;
 }
@@ -67,7 +68,7 @@ main {
   color: #666;
 }
 
-
+/* Stats */
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -135,7 +136,7 @@ button {
   cursor: pointer;
 }
 
-
+/* Goals List */
 .goals-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -192,12 +193,10 @@ button {
   padding: 10px;
 }
 
-
-.delete-button {
-  background: none;
-  border: none;
-  font-size: 18px;
-  color: red;
-  cursor: pointer;
-  margin-left: auto;
+/* Footer */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 0;
+  text-align: center;
+  color: #666;
 }

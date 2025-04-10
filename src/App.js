@@ -1,26 +1,55 @@
 import { useState, useEffect } from 'react';
 import Header from './Header';
 import Statistique from './Statistique';
-import Home from './Home';
 import Create from './Create';
 import Goals from './Goals';
 
 function App() {
-  const [goals, setGoals] = useState(() => {
-    const saved = localStorage.getItem("goals");
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("goals", JSON.stringify(goals));
-  }, [goals]);
-
-  const addGoal = (newGoal) => {
-    setGoals(newGoal);
+  // Fonction de validation des données
+  const validateGoals = (data) => {
+    if (!Array.isArray(data)) return [];
+    return data.filter(item => 
+      item && 
+      typeof item.id === 'number' && 
+      typeof item.name === 'string' &&
+      typeof item.target === 'number' &&
+      typeof item.unit === 'string' &&
+      typeof item.progress === 'number'
+    );
   };
 
+  // Initialisation de l'état avec validation
+  const [goals, setGoals] = useState(() => {
+    try {
+      const saved = localStorage.getItem("goals");
+      return saved ? validateGoals(JSON.parse(saved)) : [];
+    } catch (e) {
+      console.error("Error parsing saved goals", e);
+      return [];
+    }
+  });
+
+  // Sauvegarde dans localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem("goals", JSON.stringify(goals));
+    } catch (e) {
+      console.error("Error saving goals", e);
+    }
+  }, [goals]);
+
+  // Ajouter un nouvel objectif
+  const addGoal = (newGoal) => {
+    setGoals([...goals, {
+      ...newGoal,
+      id: Date.now(),
+      progress: 0
+    }]);
+  };
+
+  // Mettre à jour la progression
   const updateProgress = (id, amount) => {
-    const updatedGoals = goals.map(goal => {
+    setGoals(goals.map(goal => {
       if (goal.id === id) {
         return {
           ...goal,
@@ -28,15 +57,13 @@ function App() {
         };
       }
       return goal;
-    });
+    }));
+  };
 
-    setGoals(updatedGoals);
-  };
+  // Supprimer un objectif
   const deleteGoal = (id) => {
-    const updatedGoals = goals.filter(goal => goal.id !== id);
-    setGoals(updatedGoals);
+    setGoals(goals.filter(goal => goal.id !== id));
   };
-  
 
   return (
     <div className="App">
@@ -46,10 +73,13 @@ function App() {
           <h1 className="page-title">Fitness Goal Tracker</h1>
           <p className="page-description">Set, track, and achieve your fitness goals.</p>
         </div>
-        <Statistique />
+        <Statistique goals={goals} />
         <Create addGoal={addGoal} />
-        <Goals goals={goals} updateProgress={updateProgress} deleteGoal={deleteGoal} />
-
+        <Goals 
+          goals={goals} 
+          updateProgress={updateProgress} 
+          deleteGoal={deleteGoal} 
+        />
       </div>
     </div>
   );

@@ -1,56 +1,24 @@
-// const Create = () => {
-//     return ( 
-      
-
-//         <div className="card">
-//         <div className="card-header">
-//           <h2 className="card-title">Create New Goal</h2>
-//         </div>
-//         <div className="card-content">
-//           <form className="goal-form" id="new-goal-form">
-//             <input type="text" placeholder="Goal title" required/>
-//             <input type="number" placeholder="Target" required/>
-//             <select required>
-//             <option value="">chooose</option>
-//               <option value="steps">Steps</option>
-//               <option value="glasses">Glasses</option>
-//               <option value="minutes">Minutes</option>
-//               <option value="sessions">Sessions</option>
-//               <option value="calories">Calories</option>
-//               <option value="points">Points</option>
-//             </select>
-//             <button type="submit">Add</button>
-//           </form>
-//         </div>
-//       </div>
-
-//      );
-// }
- 
-// export default Create;
 import { useState } from "react";
 
 const Create = ({ addGoal }) => {
-  const [title, setTitle] = useState('');
+  const [name, setName] = useState('');
   const [target, setTarget] = useState('');
-  const [category, setCategory] = useState('');
+  const [unit, setUnit] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title || !target || !category) return;
+    if (!name || !target || !unit) return;
 
-    const newGoal = {
-      id: Date.now(),
-      title,
+    addGoal({
+      name,
       target: parseInt(target),
-      category,
-      progress: 0
-    };
+      unit
+    });
 
-    addGoal(newGoal); 
-    setTitle('');
+    // Reset form
+    setName('');
     setTarget('');
-    setCategory('');
+    setUnit('');
   };
 
   return (
@@ -60,18 +28,33 @@ const Create = ({ addGoal }) => {
       </div>
       <div className="card-content">
         <form className="goal-form" onSubmit={handleSubmit}>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Goal title" required />
-          <input type="number" value={target} onChange={(e) => setTarget(e.target.value)} placeholder="Target" required />
-          <select value={category} onChange={(e) => setCategory(e.target.value)} required>
-            <option value="">Choose</option>
+          <input 
+            type="text" 
+            value={name} 
+            onChange={(e) => setName(e.target.value)} 
+            placeholder="Goal name" 
+            required 
+          />
+          <input 
+            type="number" 
+            value={target} 
+            onChange={(e) => setTarget(e.target.value)} 
+            placeholder="Target" 
+            min="1"
+            required 
+          />
+          <select 
+            value={unit} 
+            onChange={(e) => setUnit(e.target.value)} 
+            required
+          >
+            <option value="">Choose unit</option>
             <option value="steps">Steps</option>
-            <option value="glasses">Glasses</option>
+            <option value="glasses">Glasses of water</option>
             <option value="minutes">Minutes</option>
-            <option value="sessions">Sessions</option>
-            <option value="calories">Calories</option>
-            <option value="points">Points</option>
+            <option value="workouts">Workouts</option>
           </select>
-          <button type="submit">Add</button>
+          <button type="submit">Add Goal</button>
         </form>
       </div>
     </div>
