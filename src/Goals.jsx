@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { Context } from './App';
 
-const GoalItem = ({ goal, updateProgress, deleteGoal }) => {
+const GoalItem = ({ id, goal, updateProgress, deleteGoal }) => {
   const [input, setInput] = useState('');
+  const { toUpdate, setToUpdate, goalId, setGoalId } = useContext(Context);
 
   const handleAddProgress = () => {
     const amount = parseInt(input);
@@ -11,9 +13,14 @@ const GoalItem = ({ goal, updateProgress, deleteGoal }) => {
     }
   };
 
+  const handleUpadte = (id) => {
+    setToUpdate(true);
+    setGoalId(id);
+  }
+
   const handleDelete = () => {
     if (window.confirm(`Delete goal "${goal.name}"?`)) {
-      deleteGoal(goal.id); 
+      deleteGoal(goal.id);
     }
   };
 
@@ -33,15 +40,16 @@ const GoalItem = ({ goal, updateProgress, deleteGoal }) => {
         <span>{Math.round(progressPercent)}%</span>
       </div>
       <div className="goal-actions">
-        <input 
-          type="number" 
-          placeholder="Add progress" 
-          value={input} 
-          onChange={(e) => setInput(e.target.value)} 
+        <input
+          type="number"
+          placeholder="Add progress"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           min="0"
         />
         <button onClick={handleAddProgress}>+</button>
       </div>
+      <button onClick={() => handleUpadte(goal.id)}>update</button>
     </div>
   );
 };
@@ -62,7 +70,7 @@ const Goals = ({ goals = [], updateProgress, deleteGoal }) => {
                 key={goal.id}
                 goal={goal}
                 updateProgress={updateProgress}
-                deleteGoal={deleteGoal} 
+                deleteGoal={deleteGoal}
               />
             ))
           )}

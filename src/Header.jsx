@@ -1,18 +1,18 @@
 import Home from "./Home";
 
 const Header = () => {
-    return (  
+  return (
 
-        <header>
-           
-    <div class="container header-content">
-      <div class="logo">
-        <h1>Fitness Goal Tracker</h1>
+    <header>
+
+      <div className="container header-content">
+        <div className="logo">
+          <h1>Fitness Goal Tracker</h1>
+        </div>
+        <button>New Goal</button>
       </div>
-      <button>New Goal</button>
-    </div>
-  </header>
-    );
+    </header>
+  );
 }
- 
+
 export default Header;
