@@ -3,7 +3,7 @@ import Header from './Header';
 import Statistique from './Statistique';
 import Create from './Create';
 import Goals from './Goals';
-import Update from './Update';
+import Update from './update';
 
 export const Context = createContext();
 
