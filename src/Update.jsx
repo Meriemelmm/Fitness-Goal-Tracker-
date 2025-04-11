@@ -54,7 +54,7 @@ const Update = ({ goal, updateGoal }) => {
             <option value="workouts">Workouts</option>
           </select>
           <button type="submit">update Goal</button>
-          <button type="button" onClick={() => handleCel}>Cancel</button>
+          <button type="button" onClick={ handleCel}>Cancel</button>
         </form>
       </div>
     </div>
