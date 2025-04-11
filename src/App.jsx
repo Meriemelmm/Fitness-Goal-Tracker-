@@ -18,7 +18,7 @@ function App() {
     );
   };
 
-  /
+  
   const [goals, setGoals] = useState(() => {
     try {
       const saved = localStorage.getItem("goals");
@@ -38,7 +38,7 @@ function App() {
     }
   }, [goals]);
 
-  /
+  
   const addGoal = (newGoal) => {
     setGoals([...goals, {
       ...newGoal,
